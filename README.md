@@ -1,3 +1,4 @@
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=default"></script>
 # Regularized Dynamic Time Warping Kernel (KDTW)
 
 KDTW is a similarity measure dedicated to (multivariate) time serie matching constructed from DTW with the property that KDTW(.,.) is a positive definite kernel (homogeneous to an inner product in the so-called Reproducing Kernel Hilbert Space). Following earlier work by Cuturi & al.  [1], namely the so-called Global Alignment kernel (GA-kernel), the derivation of KDTW is detailed in Marteau & Gibet 2014  [4]. KDTW is a convolution kernel as defined in  [2]. After giving a recursive definition of KDTW.
