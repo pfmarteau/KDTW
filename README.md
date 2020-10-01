@@ -4,10 +4,10 @@
 KDTW is a similarity measure dedicated to (multivariate) time serie matching constructed from DTW with the property that KDTW(.,.) is a positive definite kernel (homogeneous to an inner product in the so-called Reproducing Kernel Hilbert Space). Following earlier work by Cuturi & al.  [1], namely the so-called Global Alignment kernel (GA-kernel), the derivation of KDTW is detailed in Marteau & Gibet 2014  [4]. KDTW is a convolution kernel as defined in  [2]. After giving a recursive definition of KDTW.
 
 ## Definition
-The recursive definition of K_{DTW} kernel as defined in ~\cite{Marteau2014} is as follows:
+The recursive definition of KDTW kernel is as follows:
 \\
 \begin{align}
-\label{Eq.MEREDK}
+$$\label{Eq.MEREDK}
 \begin{array}{ll}
 \mathcal{K}_{DTW}(X_{p},Y_{q})=K^{xy}_{DTW}(X_{p}, Y_{q})+K^{xx}_{DTW}(X_{p},Y_{q}) \\
 \\ \text{where} 
@@ -31,7 +31,7 @@ K^{xy}_{DTW}(X_{p},Y_{q}) = \beta \cdot e^{- d_{E}^{2}(x(p),y(q))/\sigma}  \\
    \end{array}
    \right.\\
   \end{array}
-\end{align}
+\end{align}$$
 where 
 
 \begin{itemize}
