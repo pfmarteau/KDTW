@@ -85,7 +85,7 @@ def kdtw_lk(A, B, local_kernel):
 # output similarity: similarity between A and B (the higher, the more similar)
 '''
 def kdtw(A, B, sigma):
-    minprob= 1e-20
+    minprob= 1e-3
     distance = cdist(A, B, 'sqeuclidean')
     local_kernel=1.0/3.0*(np.exp(-distance/sigma)+minprob)
     return kdtw_lk(A,B,local_kernel)
