@@ -87,7 +87,7 @@ def kdtw(A, B, sigma):
 # return the local matching similarity (probability) 
 def Dlpr(a, b, sigma):
     factor=1.0/3.0
-    minprob=1e-20
+    minprob=1e-3
     return factor * (np.exp(-np.sum((a - b)**2)/sigma)+minprob)
 
 # Simple test
