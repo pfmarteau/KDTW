@@ -34,13 +34,18 @@ import numpy as np
 #   URL = {http://hal.inria.fr/hal-00486916}
 # } 
 # 
+'''
+# input A: first multivariate time series: array of array (nxd), n is the number of sample, d is the dimension of each sample
+# intput B: second multivariate time series: array of array (nxd), n is the number of sample, d is the dimension of each sample
+# input local_kernel: matrix of local kernel evaluations
+'''
 def kdtw_lk(A, B, local_kernel):
     d=np.shape(A)[1]
     Z=[np.zeros(d)]
     A = np.concatenate((Z,A), axis=0)
     B = np.concatenate((Z,B), axis=0)
-    [la,d]=np.shape(A)
-    [lb,d]=np.shape(B)
+    [la,d] = np.shape(A)
+    [lb,d] = np.shape(B)
     DP = np.zeros((la,lb))
     DP1 = np.zeros((la,lb));
     DP2 = np.zeros(max(la,lb));
@@ -65,11 +70,11 @@ def kdtw_lk(A, B, local_kernel):
     for i in range(1,n):
         for j in range(1,m): 
             lcost=local_kernel[i-1,j-1];
-            DP[i,j] = (DP[i-1,j] + DP[i,j-1] + DP[i-1,j-1])*lcost;
+            DP[i,j] = (DP[i-1,j] + DP[i,j-1] + DP[i-1,j-1]) * lcost;
             if i == j:
-                DP1[i,j] = DP1[i-1,j-1]*lcost + DP1[i-1,j]*DP2[i] + DP1[i,j-1]*DP2[j]
+                DP1[i,j] = DP1[i-1,j-1] * lcost + DP1[i-1,j] * DP2[i] + DP1[i,j-1]  *DP2[j]
             else:
-                DP1[i,j] = DP1[i-1,j]*DP2[i] + DP1[i,j-1]*DP2[j];
+                DP1[i,j] = DP1[i-1,j] * DP2[i] + DP1[i,j-1] * DP2[j];
     DP = DP + DP1;
     return DP[n-1,m-1]
 
@@ -81,11 +86,11 @@ def kdtw_lk(A, B, local_kernel):
 # Dynamic programming implementation of KDTW kernel
 # input A: first multivariate time series: array of array (nxd), n is the number of sample, d is the dimension of each sample
 # intput B: second multivariate time series: array of array (nxd), n is the number of sample, d is the dimension of each sample
-# input sigma: >0 used in the exponential local kernel 
+# input sigma: >0, used in the exponential local kernel 
+# input minprob: 1 > minprob > 0, used in the exponential local kernel 
 # output similarity: similarity between A and B (the higher, the more similar)
 '''
-def kdtw(A, B, sigma):
-    minprob= 1e-3
+def kdtw(A, B, sigma = 1, minprob = 1e-3):
     distance = cdist(A, B, 'sqeuclidean')
     local_kernel=1.0/3.0*(np.exp(-distance/sigma)+minprob)
     return kdtw_lk(A,B,local_kernel)
@@ -94,9 +99,9 @@ def kdtw(A, B, sigma):
 # Simple test
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
-    A=np.array([[0],[0],[1],[1],[2],[3],[5],[2],[0],[1],[-0.1]])
-    B=np.array([[0],[1],[2],[2.5],[3],[3.5],[4],[4.5],[5.5],[2],[0],[0],[.25],[.05],[0]])
-    C=np.array([[4],[4],[3],[3],[3],[3],[2],[5],[2],[.5],[.5],[.5]])
+    A = np.array([[0],[0],[1],[1],[2],[3],[5],[2],[0],[1],[-0.1]])
+    B = np.array([[0],[1],[2],[2.5],[3],[3.5],[4],[4.5],[5.5],[2],[0],[0],[.25],[.05],[0]])
+    C = np.array([[4],[4],[3],[3],[3],[3],[2],[5],[2],[.5],[.5],[.5]])
     
     print("kdtw(A,B)=", kdtw(A,B,1))
     print("kdtw(A,C)=", kdtw(A,C,1))
