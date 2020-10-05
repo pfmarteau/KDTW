@@ -34,26 +34,27 @@ import numpy as np
 # } 
 # 
 ''''
-# function kdtw(A, B, sigma)
+# function kdtw(A, B, sigma, minprob=1e-3)
 # Dynamic programming implementation of KDTW kernel
 # input A: first multivariate time series: array of array (nxd), n is the number of sample, d is the dimension of each sample
 # intput B: second multivariate time series: array of array (nxd), n is the number of sample, d is the dimension of each sample
 # input sigma: >0 used in the exponential local kernel 
+# input minprob: 1 > minprob > 0
 # output similarity: similarity between A and B (the higher, the more similar)
 '''
-def kdtw(A, B, sigma):
+def kdtw(A, B, sigma = 1, minprob = 1e-3):
     d=np.shape(A)[1]
     Z=[np.zeros(d)]
-    A = np.concatenate((Z,A), axis=0)
-    B = np.concatenate((Z,B), axis=0)
-    [la,d]=np.shape(A)
-    [lb,d]=np.shape(B)
+    A = np.concatenate((Z,A), axis = 0)
+    B = np.concatenate((Z,B), axis = 0)
+    [la,d] = np.shape(A)
+    [lb,d] = np.shape(B)
 
     DP = np.zeros((la,lb))
     DP1 = np.zeros((la,lb));
     DP2 = np.zeros(max(la,lb));
     l=min(la,lb);
-    DP2[1]=1.0;
+    DP2[1] = 1.0;
     for i in range(1,l):
         DP2[i] = Dlpr(A[i],B[i], sigma);
 
@@ -72,7 +73,7 @@ def kdtw(A, B, sigma):
 
     for i in range(1,n):
         for j in range(1,m): 
-            lcost=Dlpr(A[i], B[j], sigma);
+            lcost = Dlpr(A[i], B[j], sigma);
             DP[i,j] = (DP[i-1,j] + DP[i,j-1] + DP[i-1,j-1])*lcost;
             if i == j:
                 DP1[i,j] = DP1[i-1,j-1]*lcost + DP1[i-1,j]*DP2[i] + DP1[i,j-1]*DP2[j]
@@ -84,18 +85,19 @@ def kdtw(A, B, sigma):
 # local similarity between two samples
 # a: 1d numpy array 
 # b: 1d numpy array 
+# input sigma: >0 used in the exponential local kernel 
+# input minprob: 1 > minprob > 0
 # return the local matching similarity (probability) 
-def Dlpr(a, b, sigma):
-    factor=1.0/3.0
-    minprob=1e-3
-    return factor * (np.exp(-np.sum((a - b)**2)/sigma)+minprob)
+def Dlpr(a, b, sigma = 1, minprob = 1e-3):
+    factor = 1.0/3.0
+    return factor * (np.exp(-np.sum((a - b)**2) / sigma) + minprob)
 
 # Simple test
 if __name__ == '__main__':
     import matplotlib.pyplot as plt
-    A=np.array([[0],[0],[1],[1],[2],[3],[5],[2],[0],[1],[-0.1]])
-    B=np.array([[0],[1],[2],[2.5],[3],[3.5],[4],[4.5],[5.5],[2],[0],[0],[.25],[.05],[0]])
-    C=np.array([[4],[4],[3],[3],[3],[3],[2],[5],[2],[.5],[.5],[.5]])
+    A = np.array([[0],[0],[1],[1],[2],[3],[5],[2],[0],[1],[-0.1]])
+    B = np.array([[0],[1],[2],[2.5],[3],[3.5],[4],[4.5],[5.5],[2],[0],[0],[.25],[.05],[0]])
+    C = np.array([[4],[4],[3],[3],[3],[3],[2],[5],[2],[.5],[.5],[.5]])
     
     print("kdtw(A,B)=", kdtw(A,B,1))
     print("kdtw(A,C)=", kdtw(A,C,1))
