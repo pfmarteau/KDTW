@@ -92,7 +92,7 @@ def kdtw_lk(A, B, local_kernel):
 '''
 def kdtw(A, B, sigma = 1, minprob = 1e-3):
     distance = cdist(A, B, 'sqeuclidean')
-    local_kernel=1.0/3.0*(np.exp(-distance/sigma)+minprob)
+    local_kernel = (np.exp(-distance/sigma)+minprob)/(3*(1+minprob))
     return kdtw_lk(A,B,local_kernel)
 
 
