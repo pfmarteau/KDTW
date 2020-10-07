@@ -5,7 +5,7 @@
 
 KDTW comes with two smothing meta-parameters entering into the computation of the local kernel: 
 
-*k(x,y) = exp(-d²(x,y)/sigma)+minprob*
+*k(x,y) = (exp{-d²(x,y)/sigma]+minprob)/(1+minprob)*
 * *sigma* is used to scale the local distance computations (default value is set to 1.0).
 * *minprob* is used to smooth the alignment probability (default value is set to 1e-3).
 
