@@ -3,7 +3,7 @@
 
 **kdtw.py** and **kdtw_cdist** are two python3.* implementations of KDTW, a similarity measure dedicated to (multivariate) time serie matching. KDTW is derived from DTW while ensuring the property that KDTW(.,.) is a positive definite kernel (homogeneous to an inner product in the so-called Reproducing Kernel Hilbert Space). Following earlier work by Cuturi & al.  [1], namely the so-called Global Alignment kernel (GA-kernel or GAK), the derivation of KDTW is detailed in Marteau & Gibet 2014 [3]. KDTW is a R-Convolution kernel as defined in [2]. 
 
-KDTW comes with two smothing meta-parameters entering into the computation of the local kernel:
+KDTW comes with two smothing meta-parameters entering into the computation of the local kernel: k(x,y) = exp(-d²(x,y)/sigma)+minprob
 * *sigma* is used to scale the local distance computations (default value is set to 1.0).
 * *minprob* is used to smooth the alignment probability (default value is set to 1e-3).
 
