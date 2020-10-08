@@ -90,7 +90,7 @@ def kdtw_lk(A, B, local_kernel):
 # input epsilon: 1 > epsilon > 0, used in the exponential local kernel 
 # output similarity: similarity between A and B (the higher, the more similar)
 '''
-def kdtw(A, B, sigma = 1, epsilon = 1e-3):
+def kdtw(A, B, sigma = 1.0, epsilon = 1e-3):
     distance = cdist(A, B, 'sqeuclidean')
     local_kernel = (np.exp(-distance/sigma)+epsilon)/(3*(1+epsilon))
     return kdtw_lk(A,B,local_kernel)
