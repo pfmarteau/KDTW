@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 """
 Created on Sun Sep 27 16:46:45 2020
-
 @author: pfm
 """
 import numpy as np
@@ -41,7 +40,7 @@ import numpy as np
 # input sigma: >0 used in the exponential local kernel 
 # output similarity: similarity between A and B (the higher, the more similar)
 '''
-def kdtw(A, B, sigma = 1):
+def kdtw(A, B, sigma = 1, epsilon = 1e-3):
     d=np.shape(A)[1]
     Z=[np.zeros(d)]
     A = np.concatenate((Z,A), axis = 0)
@@ -55,7 +54,7 @@ def kdtw(A, B, sigma = 1):
     l=min(la,lb);
     DP2[1] = 1.0;
     for i in range(1,l):
-        DP2[i] = Dlpr(A[i],B[i], sigma);
+        DP2[i] = Dlpr(A[i],B[i], sigma, epsilon);
 
     DP[0,0] = 1;
     DP1[0,0] = 1;
@@ -63,16 +62,16 @@ def kdtw(A, B, sigma = 1):
     m = len(B);
 
     for i in range(1,n):
-        DP[i,1] = DP[i-1,1]*Dlpr(A[i], B[2], sigma);
+        DP[i,1] = DP[i-1,1]*Dlpr(A[i], B[2], sigma, epsilon);
         DP1[i,1] = DP1[i-1,1]*DP2[i];
 
     for j in range(1,m):
-        DP[1,j] = DP[1,j-1]*Dlpr(A[2], B[j], sigma);
+        DP[1,j] = DP[1,j-1]*Dlpr(A[2], B[j], sigma, epsilon);
         DP1[1,j] = DP1[1,j-1]*DP2[j];
 
     for i in range(1,n):
         for j in range(1,m): 
-            lcost = Dlpr(A[i], B[j], sigma);
+            lcost = Dlpr(A[i], B[j], sigma, epsilon);
             DP[i,j] = (DP[i-1,j] + DP[i,j-1] + DP[i-1,j-1])*lcost;
             if i == j:
                 DP1[i,j] = DP1[i-1,j-1]*lcost + DP1[i-1,j]*DP2[i] + DP1[i,j-1]*DP2[j]
@@ -106,3 +105,4 @@ if __name__ == '__main__':
     plt.plot(C, label='C')
     plt.legend()
     plt.show()
+    
