@@ -82,17 +82,17 @@ def kdtw_lk(A, B, local_kernel):
 
 
 ''''
-# function kdtw(A, B, sigma)
+# function kdtw(A, B, sigma, epsilon)
 # Dynamic programming implementation of KDTW kernel
 # input A: first multivariate time series: array of array (nxd), n is the number of sample, d is the dimension of each sample
 # intput B: second multivariate time series: array of array (nxd), n is the number of sample, d is the dimension of each sample
 # input sigma: >0, used in the exponential local kernel 
-# input minprob: 1 > minprob > 0, used in the exponential local kernel 
+# input epsilon: 1 > epsilon > 0, used in the exponential local kernel 
 # output similarity: similarity between A and B (the higher, the more similar)
 '''
-def kdtw(A, B, sigma = 1, minprob = 1e-3):
+def kdtw(A, B, sigma = 1, epsilon = 1e-3):
     distance = cdist(A, B, 'sqeuclidean')
-    local_kernel = (np.exp(-distance/sigma)+minprob)/(3*(1+minprob))
+    local_kernel = (np.exp(-distance/sigma)+epsilon)/(3*(1+epsilon))
     return kdtw_lk(A,B,local_kernel)
 
 
