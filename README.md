@@ -5,7 +5,7 @@
 
 KDTW comes with two smothing meta-parameters entering into the computation of the local kernel: 
 
-*k(x,y) = 1/3.(exp{-d²(x,y)/sigma]+epsilon)/(1+epsilon)*
+*k(x,y) = 1/3.(exp{-d²(x,y)/sigma}+epsilon)/(1+epsilon)*
 * *sigma* is used to scale the local distance computations (default value is set to 1.0).
 * *epsilon* is used to avoid the vanishing of products of local kernel values (assimilated to probabilities) evaluated along the alignment paths (default value is set to 1e-3).
 
