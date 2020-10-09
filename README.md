@@ -7,7 +7,7 @@ KDTW comes with two smothing meta-parameters entering into the computation of th
 
 *k(x,y) = 1/3.(exp{-d²(x,y)/sigma]+epsilon)/(1+epsilon)*
 * *sigma* is used to scale the local distance computations (default value is set to 1.0).
-* *epsilon* is used to smooth the alignment probability (default value is set to 1e-3).
+* *epsilon* is used to avoid the vanishing of products of local kernel values (assimilated to probabilities) evaluated along the alignment paths (default value is set to 1e-3).
 
 ## Algorithmic complexity
 The algorithmic complexity of KDTW is O(N^2), where N is the length of the longest of the two time series given in entry, and when no corridor size is specified. This complexity drops down to O(C.N) when a symmetric corridor of size C is exploited. 
