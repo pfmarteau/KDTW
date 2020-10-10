@@ -6,7 +6,7 @@ Created on Sun Sep 27 16:46:45 2020
 """
 import numpy as np
 # Filename: kdtw.py
-# Python source code for the "Kernelized" Dynamic Time Warping sililarity (as defined in the reference below).
+# Python source code for the "Kernelized" Dynamic Time Warping similarity (as defined in the reference below).
 # Author: Pierre-Francois Marteau
 # Version: V1.0 du 13/09/2014, 
 # Licence: GPL
