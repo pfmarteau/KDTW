@@ -7,8 +7,8 @@ Created on Sun Sep 27 16:46:45 2020
 """
 from scipy.spatial.distance import cdist
 import numpy as np
-# Filename: kdtw.m
-# Python source code for the "Kernelized" Dynamic Time Warping sililarity (as defined in the reference below).
+# Filename: kdtw_cdist.py
+# Python source code for the "Kernelized" Dynamic Time Warping similarity (as defined in the reference below).
 # Author: Pierre-Francois Marteau
 # Version: V1.0 du 13/09/2014, 
 # Licence: GPL
