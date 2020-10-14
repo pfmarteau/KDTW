@@ -17,7 +17,7 @@ return out;
 
 /* ==== Build the local kernel cost matrix ======================
 */
-static double **localKernel(const double **A, int la, const double **B, int lb, int dim, double sigma, double epsilon){
+static double **localKernel(double **A, int la, double **B, int lb, int dim, double sigma, double epsilon){
     double **LK = (double **)calloc(la, sizeof(double *));
     for (int i = 0; i < la; i++) {
     	LK[i] = (double *)calloc(lb, sizeof(double));
@@ -131,8 +131,8 @@ static PyObject* similarity(PyObject* self, PyObject* args)
 {
     double value;
     double answer=0.0;
-    const int *A;
-    const int *B;
+    double **A;
+    double **B;
     double sigma, epsilon;
     PyArrayObject *seq1, *seq2;
     
@@ -153,7 +153,6 @@ static PyObject* similarity(PyObject* self, PyObject* args)
     int la, lb, dima, dimb;
     A = pymatrix_to_Carrayptrs(seq1, &la, &dima);
     B = pymatrix_to_Carrayptrs(seq2, &lb, &dimb);
-    PyObject **objects;
 
     if (dima != dimb){
         printf("dimensions of time series are not equal! \n");
@@ -206,4 +205,3 @@ initKDTW(void)
 }
 
 #endif
-
