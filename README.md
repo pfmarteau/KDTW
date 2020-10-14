@@ -2,6 +2,7 @@
 # KDTW: A Regularized Dynamic Time Warping Kernel
 
 **kdtw.py** and **kdtw_cdist** are two python3.* implementations of KDTW, a similarity measure dedicated to (multivariate) time serie matching. 
+
 **KDTW_c** directory contains a C biding of KDTW, nearly 200 times faster that kdtw_cdist implementation which is much faster than kdtw.py.
 To install the C version, just execute:
 python3 setup.py install --user
