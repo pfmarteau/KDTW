@@ -6,6 +6,7 @@
 **KDTW_c** directory contains a C biding of KDTW, nearly 40 times faster that kdtw_cdist implementation which is much faster than kdtw.py.
 To install the C version, just execute inside this subdirectory:
 > python3 setup.py install --user
+
 and to test:
 > python3 test.py
 
