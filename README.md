@@ -3,9 +3,11 @@
 
 **kdtw.py** and **kdtw_cdist** are two python3.* implementations of KDTW, a similarity measure dedicated to (multivariate) time serie matching. 
 
-**KDTW_c** directory contains a C biding of KDTW, nearly 200 times faster that kdtw_cdist implementation which is much faster than kdtw.py.
+**KDTW_c** directory contains a C biding of KDTW, nearly 40 times faster that kdtw_cdist implementation which is much faster than kdtw.py.
 To install the C version, just execute inside this subdirectory:
 > python3 setup.py install --user
+and to test:
+> python3 test.py
 
 KDTW is derived from DTW while ensuring the property that KDTW(.,.) is a positive definite kernel (homogeneous to an inner product in the so-called Reproducing Kernel Hilbert Space). Following earlier work by Cuturi & al.  [1], namely the so-called Global Alignment kernel (GA-kernel or GAK), the derivation of KDTW is detailed in Marteau & Gibet 2014 [3]. KDTW is a R-Convolution kernel as defined in [2]. 
 
