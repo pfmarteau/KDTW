@@ -55,15 +55,6 @@ double kdtw_lk(int lA, int lB, double **local_kernel){
     DP[0][0] = 1;
     DP1[0][0] = 1;
 
-    for (int i=1; i<la; i++){
-        DP[i][1] = DP[i-1][1]*local_kernel[i-1][2];
-        DP1[i][1] = DP1[i-1][1]*DP2[i];
-        }
-    for (int j=1; j<lb; j++){
-        DP[1][j] = DP[1][j-1]*local_kernel[2][j-1];
-        DP1[1][j] = DP1[1][j-1]*DP2[j];
-        }
-
     for (int i = 1; i<la; i++){
         for (int j=1; j<lb; j++){ 
             DP[i][j] = (DP[i-1][j] + DP[i][j-1] + DP[i-1][j-1]) * local_kernel[i-1][j-1];
