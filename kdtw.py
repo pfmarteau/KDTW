@@ -60,7 +60,7 @@ def kdtw(A, B, sigma = 1, epsilon = 1e-3):
             DP2[i] = Dlpr(A[la-1],B[i], sigma, epsilon);
     elif lb<la:
         for i in range(lb,la):
-            DP2[i] = Dlpr(A[i,B[lb-i], sigma, epsilon);
+            DP2[i] = Dlpr(A[i],B[lb-i], sigma, epsilon);
 
     DP[0,0] = 1;
     DP1[0,0] = 1;
