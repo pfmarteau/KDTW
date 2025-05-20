@@ -105,9 +105,35 @@ def Dlpr(a, b, sigma=1, epsilon=1e-3):
     return (np.exp(-np.sum((a - b) ** 2) / sigma) + epsilon) / (3 * (1 + epsilon))
 
 
+def compare_to_matlab():
+    # parameters
+    gamma = 0.125
+    epsilon = 1e-20
+
+    # Univariate case
+    x = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9], dtype=float).reshape(-1, 1)
+    y = np.array([5, 6, 7, 8, 9, 1, 2], dtype=float).reshape(-1, 1)
+    expected_distance = 1.2814254453822292e-102
+
+    distance = kdtw(x, y, sigma=gamma, epsilon=epsilon)
+    np.testing.assert_almost_equal(distance, expected_distance, decimal=112)
+
+    # multivariate case
+    x = np.array(
+        [[1, 2, 3, 4, 5, 6, 7, 8, 9], [1, 2, 3, 2, 1, 2, 3, 2, 1]], dtype=float
+    ).T
+    y = np.array([[5, 6, 7, 8, 9, 1, 2], [5, 6, 7, 8, 7, 6, 5]], dtype=float).T
+    expected_distance = 1.828989485754932e-183
+
+    distance = kdtw(x, y, sigma=gamma, epsilon=epsilon)
+    np.testing.assert_almost_equal(distance, expected_distance, decimal=193)
+
+
 # Simple test
 if __name__ == "__main__":
     import matplotlib.pyplot as plt
+
+    compare_to_matlab()
 
     A = np.array([[0], [0], [1], [1], [2], [3], [5], [2], [0], [1], [-0.1]])
     B = np.array(
