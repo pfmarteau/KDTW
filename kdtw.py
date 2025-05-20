@@ -35,12 +35,15 @@ import numpy as np
 
 
 def kdtw(A, B, sigma=1, epsilon=1e-3):
-    """
-    # Dynamic programming implementation of KDTW kernel
-    # input A: first multivariate time series: array of array (nxd), n is the number of sample, d is the dimension of each sample
-    # intput B: second multivariate time series: array of array (nxd), n is the number of sample, d is the dimension of each sample
-    # input sigma: >0 used in the exponential local kernel
-    # output similarity: similarity between A and B (the higher, the more similar)
+    """Dynamic programming implementation of KDTW kernel
+
+    :param A: first multivariate time series: array of array (n x d), n is the number
+              of samples, d is the dimension of each sample
+    :param B: second multivariate time series: array of array (n x d), n is the number
+              of samples, d is the dimension of each sample
+    :param sigma: must be >0; used in the exponential local kernel
+    :param epsilon: must be 1 > epsilon > 0, used in the exponential local kernel
+    :return: similarity between A and B (the higher, the more similar)
     """
     d = np.shape(A)[1]
     Z = [np.zeros(d)]
