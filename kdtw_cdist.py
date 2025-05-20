@@ -52,7 +52,7 @@ def kdtw_lk(A, B, local_kernel):
     DP1 = np.zeros((la, lb))
     DP2 = np.zeros(max(la, lb))
     l = min(la, lb)
-    DP2[1] = 1.0
+    DP2[0] = 1.0
     for i in range(1, l):
         DP2[i] = local_kernel[i - 1, i - 1]
 
@@ -62,12 +62,12 @@ def kdtw_lk(A, B, local_kernel):
     m = len(B)
 
     for i in range(1, n):
-        DP[i, 1] = DP[i - 1, 1] * local_kernel[i - 1, 2]
-        DP1[i, 1] = DP1[i - 1, 1] * DP2[i]
+        DP[i, 0] = DP[i - 1, 0] * local_kernel[i - 1, 0]
+        DP1[i, 0] = DP1[i - 1, 0] * DP2[i]
 
     for j in range(1, m):
-        DP[1, j] = DP[1, j - 1] * local_kernel[2, j - 1]
-        DP1[1, j] = DP1[1, j - 1] * DP2[j]
+        DP[0, j] = DP[0, j - 1] * local_kernel[0, j - 1]
+        DP1[0, j] = DP1[0, j - 1] * DP2[j]
 
     for i in range(1, n):
         for j in range(1, m):

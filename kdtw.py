@@ -53,7 +53,7 @@ def kdtw(A, B, sigma=1, epsilon=1e-3):
     DP1 = np.zeros((la, lb))
     DP2 = np.zeros(max(la, lb))
     l = min(la, lb)
-    DP2[1] = 1.0
+    DP2[0] = 1.0
     for i in range(1, l):
         DP2[i] = Dlpr(A[i], B[i], sigma, epsilon)
     if la < lb:
@@ -69,12 +69,12 @@ def kdtw(A, B, sigma=1, epsilon=1e-3):
     m = len(B)
 
     for i in range(1, n):
-        DP[i, 1] = DP[i - 1, 1] * Dlpr(A[i], B[2], sigma, epsilon)
-        DP1[i, 1] = DP1[i - 1, 1] * DP2[i]
+        DP[i, 0] = DP[i - 1, 0] * Dlpr(A[i], B[0], sigma, epsilon)
+        DP1[i, 0] = DP1[i - 1, 0] * DP2[i]
 
     for j in range(1, m):
-        DP[1, j] = DP[1, j - 1] * Dlpr(A[2], B[j], sigma, epsilon)
-        DP1[1, j] = DP1[1, j - 1] * DP2[j]
+        DP[0, j] = DP[0, j - 1] * Dlpr(A[0], B[j], sigma, epsilon)
+        DP1[0, j] = DP1[0, j - 1] * DP2[j]
 
     for i in range(1, n):
         for j in range(1, m):
