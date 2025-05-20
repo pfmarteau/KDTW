@@ -45,52 +45,35 @@ def kdtw(A, B, sigma=1, epsilon=1e-3):
     :param epsilon: must be 1 > epsilon > 0, used in the exponential local kernel
     :return: similarity between A and B (the higher, the more similar)
     """
-    d = np.shape(A)[1]
-    Z = [np.zeros(d)]
-    A = np.concatenate((Z, A), axis=0)
-    B = np.concatenate((Z, B), axis=0)
-    [la, d] = np.shape(A)
-    [lb, d] = np.shape(B)
+    n = np.shape(A)[0] + 1
+    m = np.shape(B)[0] + 1
 
-    DP = np.zeros((la, lb))
-    DP1 = np.zeros((la, lb))
-    DP2 = np.zeros(max(la, lb))
-    l = min(la, lb)
+    DP = np.zeros((n, m))
+    DP1 = np.zeros((n, m))
+    DP2 = np.zeros(max(n, m))
+
     DP2[0] = 1.0
-    for i in range(1, l):
-        DP2[i] = Dlpr(A[i], B[i], sigma, epsilon)
-    if la < lb:
-        for i in range(la, lb):
-            DP2[i] = Dlpr(A[la - 1], B[i], sigma, epsilon)
-    elif lb < la:
-        for i in range(lb, la):
-            DP2[i] = Dlpr(A[i], B[lb - i], sigma, epsilon)
+    for i in range(1, min(n, m)):
+        DP2[i] = Dlpr(A[i-1], B[i-1], sigma, epsilon)
 
     DP[0, 0] = 1
     DP1[0, 0] = 1
-    n = len(A)
-    m = len(B)
 
     for i in range(1, n):
-        DP[i, 0] = DP[i - 1, 0] * Dlpr(A[i], B[0], sigma, epsilon)
+        DP[i, 0] = DP[i - 1, 0] * Dlpr(A[i-1], B[0], sigma, epsilon)
         DP1[i, 0] = DP1[i - 1, 0] * DP2[i]
 
     for j in range(1, m):
-        DP[0, j] = DP[0, j - 1] * Dlpr(A[0], B[j], sigma, epsilon)
+        DP[0, j] = DP[0, j - 1] * Dlpr(A[0], B[j-1], sigma, epsilon)
         DP1[0, j] = DP1[0, j - 1] * DP2[j]
 
     for i in range(1, n):
         for j in range(1, m):
-            lcost = Dlpr(A[i], B[j], sigma, epsilon)
+            lcost = Dlpr(A[i-1], B[j-1], sigma, epsilon)
             DP[i, j] = (DP[i - 1, j] + DP[i, j - 1] + DP[i - 1, j - 1]) * lcost
+            DP1[i, j] = DP1[i - 1, j] * DP2[i] + DP1[i, j - 1] * DP2[j]
             if i == j:
-                DP1[i, j] = (
-                    DP1[i - 1, j - 1] * lcost
-                    + DP1[i - 1, j] * DP2[i]
-                    + DP1[i, j - 1] * DP2[j]
-                )
-            else:
-                DP1[i, j] = DP1[i - 1, j] * DP2[i] + DP1[i, j - 1] * DP2[j]
+                DP1[i, j] += DP1[i - 1, j - 1] * lcost
     DP = DP + DP1
     return DP[n - 1, m - 1]
 
@@ -107,7 +90,7 @@ def Dlpr(a, b, sigma=1, epsilon=1e-3):
 
 def compare_to_matlab():
     # parameters
-    gamma = 0.125
+    sigma = 0.125
     epsilon = 1e-20
 
     # Univariate case
@@ -115,7 +98,7 @@ def compare_to_matlab():
     y = np.array([5, 6, 7, 8, 9, 1, 2], dtype=float).reshape(-1, 1)
     expected_distance = 1.2814254453822292e-102
 
-    distance = kdtw(x, y, sigma=gamma, epsilon=epsilon)
+    distance = kdtw(x, y, sigma=sigma, epsilon=epsilon)
     np.testing.assert_almost_equal(distance, expected_distance, decimal=112)
 
     # multivariate case
@@ -125,7 +108,7 @@ def compare_to_matlab():
     y = np.array([[5, 6, 7, 8, 9, 1, 2], [5, 6, 7, 8, 7, 6, 5]], dtype=float).T
     expected_distance = 1.828989485754932e-183
 
-    distance = kdtw(x, y, sigma=gamma, epsilon=epsilon)
+    distance = kdtw(x, y, sigma=sigma, epsilon=epsilon)
     np.testing.assert_almost_equal(distance, expected_distance, decimal=193)
 
 
