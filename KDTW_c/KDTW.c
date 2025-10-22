@@ -6,13 +6,13 @@
 
 /* ==== Square Euclidean Distance as local kernel  ======================
 */
-static double sqEuclidean(const double *a, const double *b, int dim){
+static double L2(const double *a, const double *b, int dim){
 double x, out=0.0;
 for (int k=0; k<dim; k++){
   x=(a[k]-b[k]);
   out+=x*x;
   }
-return out;
+return sqrt(out);
 }
 
 /* ==== Build the local kernel cost matrix ======================
@@ -26,11 +26,11 @@ static double **localKernel(double **A, int la, double **B, int lb, int dim, dou
     	LK[i] = (double *)calloc(l, sizeof(double));
         for (int j=0; j<l; j++) {
 	    if (i<la && j<lb)
-                LK[i][j]=(exp(-sqEuclidean(A[i],B[j], dim)/sigma)+epsilon)/(3*(1+epsilon));
+                LK[i][j]=(exp(-L2(A[i],B[j], dim)/sigma)+epsilon)/(3*(1+epsilon));
             else if (i<la)
-		LK[i][j]=(exp(-sqEuclidean(A[i],B[lb-1], dim)/sigma)+epsilon)/(3*(1+epsilon));
+		LK[i][j]=(exp(-L2(A[i],B[lb-1], dim)/sigma)+epsilon)/(3*(1+epsilon));
             else 
-		LK[i][j]=(exp(-sqEuclidean(A[la-1],B[j], dim)/sigma)+epsilon)/(3*(1+epsilon));
+		LK[i][j]=(exp(-L2(A[la-1],B[j], dim)/sigma)+epsilon)/(3*(1+epsilon));
         }
     }
     return LK;
